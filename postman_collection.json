@@ -1,0 +1,337 @@
+{
+  "info": {
+    "name": "ROBOX Robot Fleet API",
+    "_postman_id": "b2a5c8f0-7d5f-4f0f-a9fd-8d6f1dcb9fd0",
+    "description": "Postman collection for the ROBOX Robot Fleet backend. Includes the public health endpoint and all protected robot CRUD routes.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "System",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            },
+            "description": "Public endpoint that returns backend status, robot count, and a timestamp."
+          }
+        },
+        {
+          "name": "Swagger Docs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api-docs",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api-docs"
+              ]
+            },
+            "description": "Swagger UI for interactive API documentation."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Robots",
+      "item": [
+        {
+          "name": "List Robots",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/robots?status=active&location=5.1423&search=6G&page=1&limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "robots"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "active",
+                  "description": "Filter by robot status"
+                },
+                {
+                  "key": "location",
+                  "value": "5.1423",
+                  "description": "Filter by location text"
+                },
+                {
+                  "key": "search",
+                  "value": "6G",
+                  "description": "Search across robot fields"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Pagination page"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Pagination limit"
+                }
+              ]
+            },
+            "description": "Returns a paginated list of robots. All query parameters are optional."
+          }
+        },
+        {
+          "name": "Get Robot By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/robots/{{robotId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "robots",
+                "{{robotId}}"
+              ]
+            },
+            "description": "Fetches a single robot record by its ID."
+          }
+        },
+        {
+          "name": "Create Robot",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Robot R1001\",\n  \"status\": \"active\",\n  \"battery\": 87,\n  \"location\": \"(4.5123, 7.1842, 2.6631)\",\n  \"model\": \"6G\",\n  \"lastMaintenance\": \"2026-04-20 09:30:00\",\n  \"task_type\": \"Inventory Scan\",\n  \"task_duration\": 118.4,\n  \"energy_consumption\": 6.8,\n  \"position_coordinates\": \"(4.5123, 7.1842, 2.6631)\",\n  \"robot_speed\": 0.58,\n  \"sensor_id\": \"S12\",\n  \"sensor_type\": \"Lidar\",\n  \"sensor_reading\": 73.2,\n  \"timestamp\": \"2026-04-26 08:15:00\",\n  \"data_size\": 712,\n  \"network_load\": 66.5,\n  \"network_latency\": 18.1,\n  \"packet_loss_rate\": 1.2,\n  \"network_type\": \"6G\",\n  \"slice_id\": \"Slice2\",\n  \"slice_bandwidth\": 1480,\n  \"command_delay\": 7.4,\n  \"feedback_delay\": 11.9,\n  \"data_transfer_time\": 20.6,\n  \"total_delay\": 39.9,\n  \"signal_strength\": -41.7,\n  \"latency\": 6.9,\n  \"resource_allocation\": 84.3,\n  \"error_rate\": 0.08\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/robots",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "robots"
+              ]
+            },
+            "description": "Creates a new robot. The backend requires the core fields name, status, battery, location, and model."
+          }
+        },
+        {
+          "name": "Update Robot",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Robot R002\",\n  \"status\": \"idle\",\n  \"battery\": 91,\n  \"location\": \"(2.1044, 5.8821, 6.1403)\",\n  \"model\": \"6G\",\n  \"lastMaintenance\": \"2026-04-25 14:10:00\",\n  \"task_type\": \"Docking\",\n  \"task_duration\": 42.5,\n  \"energy_consumption\": 3.1,\n  \"position_coordinates\": \"(2.1044, 5.8821, 6.1403)\",\n  \"robot_speed\": 0.21,\n  \"sensor_id\": \"S3\",\n  \"sensor_type\": \"Motion\",\n  \"sensor_reading\": 68.4,\n  \"timestamp\": \"2026-04-26 08:45:00\",\n  \"data_size\": 640,\n  \"network_load\": 49.8,\n  \"network_latency\": 16.3,\n  \"packet_loss_rate\": 0.6,\n  \"network_type\": \"6G\",\n  \"slice_id\": \"Slice1\",\n  \"slice_bandwidth\": 1364,\n  \"command_delay\": 6.2,\n  \"feedback_delay\": 9.7,\n  \"data_transfer_time\": 17.4,\n  \"total_delay\": 33.3,\n  \"signal_strength\": -43.2,\n  \"latency\": 6.4,\n  \"resource_allocation\": 88.6,\n  \"error_rate\": 0.03\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/robots/{{robotId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "robots",
+                "{{robotId}}"
+              ]
+            },
+            "description": "Updates an existing robot. The backend accepts partial updates, but the payload is validated against core robot fields after merge."
+          }
+        },
+        {
+          "name": "Delete Robot",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/robots/{{robotId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "robots",
+                "{{robotId}}"
+              ]
+            },
+            "description": "Deletes a robot by ID and returns the removed record."
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "apiKey",
+      "value": "robox-secret-key"
+    },
+    {
+      "key": "robotId",
+      "value": "R002"
+    }
+  ]
+}
